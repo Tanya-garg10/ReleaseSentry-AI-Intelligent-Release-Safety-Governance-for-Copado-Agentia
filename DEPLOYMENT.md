@@ -4,7 +4,199 @@ This guide covers multiple deployment options for ReleaseSentry AI.
 
 ---
 
-## Option 1: Docker Deployment (Recommended)
+## Option 1: Vercel Deployment (Recommended)
+
+### Prerequisites
+- A Vercel account (free at https://vercel.com)
+- GitHub account connected to Vercel
+
+### Quick Deploy with Vercel CLI
+
+1. **Install Vercel CLI**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Login to Vercel**
+   ```bash
+   vercel login
+   ```
+
+3. **Deploy from the project directory**
+   ```bash
+   cd "C:\Users\arpan\Downloads\releasesentry ai"
+   vercel
+   ```
+
+4. **Follow the prompts:**
+   - Set up and deploy? → **Yes**
+   - Link to existing project? → **No**
+   - Project name → **releasesentry-ai** (or your preferred name)
+   - Directory → **.** (current directory)
+   - Override settings? → **No**
+
+5. **Add environment variables in Vercel dashboard:**
+   - Go to https://vercel.com/dashboard
+   - Select your project
+   - Go to Settings → Environment Variables
+   - Add:
+     - `FEATHERLESS_API_KEY`: Your Featherless API key (optional)
+     - `AGENTIA_FORCE_DEMO`: `true` (for demo mode)
+     - `PORT`: `3000`
+
+6. **Redeploy to apply environment variables**
+   ```bash
+   vercel --prod
+   ```
+
+### Deploy via Vercel Dashboard (No CLI)
+
+1. **Go to Vercel Dashboard**
+   - Visit https://vercel.com/dashboard
+   - Click "Add New Project"
+
+2. **Import from GitHub**
+   - Select your repository: `Tanya-garg10/ReleaseSentry-AI-Intelligent-Release-Safety-Governance-for-Copado-Agentia`
+   - Click "Import"
+
+3. **Configure Project**
+   - Framework Preset: **Other**
+   - Root Directory: **./**
+   - Build Command: `npm install --legacy-peer-deps && npm run build`
+   - Output Directory: `dist`
+   - Install Command: `npm install --legacy-peer-deps`
+
+4. **Add Environment Variables**
+   - `FEATHERLESS_API_KEY`: Your Featherless API key (optional)
+   - `AGENTIA_FORCE_DEMO`: `true`
+   - `PORT`: `3000`
+
+5. **Deploy**
+   - Click "Deploy"
+   - Wait for build to complete
+   - Your app will be live at `https://your-project.vercel.app`
+
+### Vercel-Specific Notes
+
+- **Port Handling**: Vercel automatically assigns a port, no need to set `PORT` manually
+- **Database**: SQLite database is reset on each deployment (use a persistent database for production)
+- **File Storage**: The `data/` directory is not persisted across deployments
+- **Environment Variables**: Changes require a redeploy to take effect
+- **Free Tier**: Vercel's free tier includes:
+  - 100GB bandwidth per month
+  - Unlimited deployments
+  - Automatic HTTPS
+  - Global CDN
+
+---
+
+## Option 2: Railway Deployment
+
+### Prerequisites
+- Railway account (free at https://railway.app)
+- GitHub account connected to Railway
+
+### Quick Deploy with Railway CLI
+
+1. **Install Railway CLI**
+   ```bash
+   npm install -g @railway/cli
+   ```
+
+2. **Login**
+   ```bash
+   railway login
+   ```
+
+3. **Initialize project**
+   ```bash
+   cd "C:\Users\arpan\Downloads\releasesentry ai"
+   railway init
+   ```
+
+4. **Deploy**
+   ```bash
+   railway up
+   ```
+
+5. **Add environment variables in Railway dashboard**
+   - Go to your Railway project
+   - Click "Variables"
+   - Add:
+     - `FEATHERLESS_API_KEY`: Your Featherless API key (optional)
+     - `AGENTIA_FORCE_DEMO`: `true`
+     - `PORT`: Railway assigns automatically
+
+### Deploy via Railway Dashboard
+
+1. **Go to Railway Dashboard**
+   - Visit https://railway.app
+   - Click "New Project"
+
+2. **Deploy from GitHub**
+   - Select "Deploy from GitHub repo"
+   - Choose your repository
+   - Click "Deploy Now"
+
+3. **Configure**
+   - Build Command: `npm install --legacy-peer-deps && npm run build`
+   - Start Command: `node dist/server.js`
+
+4. **Add Environment Variables**
+   - In the Variables tab, add:
+     - `FEATHERLESS_API_KEY`: Your Featherless API key (optional)
+     - `AGENTIA_FORCE_DEMO`: `true`
+
+---
+
+## Option 3: Render Deployment
+
+### Prerequisites
+- Render account (free at https://render.com)
+- GitHub account connected to Render
+
+### Deploy via Render Dashboard
+
+1. **Create a new Web Service**
+   - Go to https://render.com
+   - Click "New +"
+   - Select "Web Service"
+
+2. **Connect Repository**
+   - Connect your GitHub account
+   - Select the repository: `Tanya-garg10/ReleaseSentry-AI-Intelligent-Release-Safety-Governance-for-Copado-Agentia`
+
+3. **Configure Build Settings**
+   - Name: `releasesentry-ai`
+   - Region: Choose nearest region
+   - Branch: `master`
+   - Runtime: `Node`
+   - Build Command: `npm install --legacy-peer-deps && npm run build`
+   - Start Command: `node dist/server.js`
+
+4. **Add Environment Variables**
+   - In the "Environment" section, add:
+     - `FEATHERLESS_API_KEY`: Your Featherless API key (optional)
+     - `AGENTIA_FORCE_DEMO`: `true`
+     - `PORT`: Render assigns automatically
+
+5. **Deploy**
+   - Click "Create Web Service"
+   - Wait for deployment to complete
+   - Your app will be live at `https://your-service.onrender.com`
+
+### Render-Specific Notes
+
+- **Free Tier**: Render's free tier includes:
+  - 750 hours/month of compute
+  - Automatic HTTPS
+  - Persistent disk (1GB)
+- **Sleep Mode**: Free tier services sleep after 15 minutes of inactivity
+- **Database**: SQLite database persists on Render's disk
+
+---
+
+## Option 4: Docker Deployment
 
 ### Prerequisites
 - Docker installed on your system
@@ -73,81 +265,7 @@ This guide covers multiple deployment options for ReleaseSentry AI.
 
 ---
 
-## Option 2: Cloud Deployment
-
-### Vercel (Recommended for Frontend)
-
-#### Deploy Backend with Vercel
-
-1. **Install Vercel CLI**
-   ```bash
-   npm install -g vercel
-   ```
-
-2. **Login to Vercel**
-   ```bash
-   vercel login
-   ```
-
-3. **Deploy**
-   ```bash
-   vercel
-   ```
-
-4. **Add environment variables in Vercel dashboard**
-   - `FEATHERLESS_API_KEY`
-   - `AGENTIA_FORCE_DEMO`
-   - `PORT` (set to default or your preferred port)
-
-### Railway
-
-1. **Install Railway CLI**
-   ```bash
-   npm install -g @railway/cli
-   ```
-
-2. **Login**
-   ```bash
-   railway login
-   ```
-
-3. **Initialize project**
-   ```bash
-   railway init
-   ```
-
-4. **Deploy**
-   ```bash
-   railway up
-   ```
-
-5. **Add environment variables in Railway dashboard**
-   - `FEATHERLESS_API_KEY`
-   - `AGENTIA_FORCE_DEMO`
-   - `PORT` (Railway assigns port automatically)
-
-### Render
-
-1. **Create a new Web Service on Render**
-   - Go to https://render.com
-   - Click "New +"
-   - Select "Web Service"
-   - Connect your GitHub repository
-
-2. **Configure build settings**
-   - Build Command: `npm install --legacy-peer-deps && npm run build`
-   - Start Command: `node dist/server.js`
-
-3. **Add environment variables**
-   - `FEATHERLESS_API_KEY`
-   - `AGENTIA_FORCE_DEMO`
-   - `PORT` (Render assigns port automatically)
-
-4. **Deploy**
-
----
-
-## Option 3: Traditional Server Deployment
+## Option 5: Traditional Server Deployment
 
 ### Prerequisites
 - Node.js v20 or v22+
@@ -233,7 +351,7 @@ This guide covers multiple deployment options for ReleaseSentry AI.
 
 ---
 
-## Option 4: Kubernetes Deployment
+## Option 6: Kubernetes Deployment
 
 ### Create Kubernetes Manifests
 
