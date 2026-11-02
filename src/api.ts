@@ -216,7 +216,7 @@ export const api = {
     releaseId?: string;
     incidentId?: string;
     userQuery?: string;
-  }): Promise<{ explanation: string; provider: 'GEMINI_LLM' | 'DETERMINISTIC_ENGINE' }> {
+  }): Promise<{ explanation: string; provider: 'FEATHERLESS_LLM' | 'DETERMINISTIC_ENGINE' }> {
     const res = await fetch(`${API_BASE}/ai/explain`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

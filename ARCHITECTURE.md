@@ -34,7 +34,7 @@
 │   │       ├── policy-engine/           # Configurable Policy-as-Code
 │   │       ├── lifecycle/               # State machine & approval invariants
 │   │       ├── adapters/                # Copado Agentia CLI adapter (DEMO/LIVE)
-│   │       ├── ai-analyst/              # Gemini / deterministic explanation
+│   │       ├── ai-analyst/              # Featherless AI / deterministic explanation
 │   │       └── __tests__/               # Vitest automated test suite
 │   ├── cli/                             # Headless CLI
 │   │   └── releasesentry.ts

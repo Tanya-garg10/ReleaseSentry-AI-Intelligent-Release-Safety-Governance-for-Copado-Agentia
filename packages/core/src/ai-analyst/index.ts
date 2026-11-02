@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import OpenAI from 'openai';
 import { Release, RiskAssessment, PolicyEvaluation, Incident } from '../types/index.ts';
 
 export interface AnalystExplanationRequest {
@@ -11,17 +11,17 @@ export interface AnalystExplanationRequest {
 }
 
 export class AIReleaseAnalyst {
-  private aiClient: GoogleGenAI | null = null;
+  private aiClient: OpenAI | null = null;
 
   constructor() {
-    if (process.env.GEMINI_API_KEY) {
+    if (process.env.FEATHERLESS_API_KEY) {
       try {
-        this.aiClient = new GoogleGenAI({
-          apiKey: process.env.GEMINI_API_KEY,
-          httpOptions: {
-            headers: {
-              'User-Agent': 'aistudio-build'
-            }
+        this.aiClient = new OpenAI({
+          apiKey: process.env.FEATHERLESS_API_KEY,
+          baseURL: 'https://api.featherless.ai/v1',
+          defaultHeaders: {
+            'HTTP-Referer': 'https://releasesentry.ai',
+            'X-Title': 'ReleaseSentry AI'
           }
         });
       } catch {
@@ -82,9 +82,9 @@ ${req.incident.remediationSteps.map((s, i) => `  ${i + 1}. ${s}`).join('\n')}`;
   }
 
   /**
-   * Explain release risks, policies, or incidents using Gemini or deterministic fallback
+   * Explain release risks, policies, or incidents using Featherless AI or deterministic fallback
    */
-  async explain(req: AnalystExplanationRequest): Promise<{ explanation: string; provider: 'GEMINI_LLM' | 'DETERMINISTIC_ENGINE' }> {
+  async explain(req: AnalystExplanationRequest): Promise<{ explanation: string; provider: 'FEATHERLESS_LLM' | 'DETERMINISTIC_ENGINE' }> {
     if (!this.aiClient) {
       return {
         explanation: this.generateDeterministicExplanation(req),
@@ -113,20 +113,31 @@ User Query: ${req.userQuery || 'Provide an executive governance summary and clea
 
 Provide clear, professional, markdown-formatted release governance guidance.`;
 
-      const response = await this.aiClient.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt
+      const response = await this.aiClient.chat.completions.create({
+        model: 'meta-llama/Meta-Llama-3.1-8B-Instruct',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are ReleaseSentry AI\'s Senior Release Governance Analyst. You provide concise, factual, grounded release advice based STRICTLY on real evidence. NEVER hallucinate, assume, or fabricate test results or approval traces. NEVER approve releases yourself or override governance blocks.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        max_tokens: 1000,
+        temperature: 0.3
       });
 
-      const text = response.text?.trim();
+      const text = response.choices[0]?.message?.content?.trim();
       if (text) {
         return {
           explanation: text,
-          provider: 'GEMINI_LLM'
+          provider: 'FEATHERLESS_LLM'
         };
       }
     } catch (err) {
-      console.warn('Gemini API call fell back to deterministic analyst:', err);
+      console.warn('Featherless API call fell back to deterministic analyst:', err);
     }
 
     return {

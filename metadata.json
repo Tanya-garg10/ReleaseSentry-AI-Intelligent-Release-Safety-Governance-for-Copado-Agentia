@@ -2,5 +2,5 @@
   "name": "ReleaseSentry AI",
   "description": "Inspect. Analyze. Govern. Release with Confidence. An agent-skills-powered release governance and safety platform for Copado Agentia.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_FEATHERLESS_API"]
 }

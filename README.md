@@ -180,6 +180,38 @@ Verifies:
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+- **Node.js**: v20 or v22+ (v22.23+ recommended for native `node:sqlite`)
+- **NPM**: v9 or v10+
+- **Copado Agentia CLI** (optional, for live production integration)
+
+### Copado Agentia CLI Setup (Optional)
+
+ReleaseSentry AI can operate in two modes:
+- **DEMO MODE**: High-fidelity simulated release sandbox (default, no setup required)
+- **LIVE MODE**: Connected to real Copado environment (requires Agentia CLI)
+
+To enable LIVE MODE:
+
+1. **Sign in with Copado**
+   - [Start a free Agentia trial](https://app.copado.com/trial?utm_source=developer.copado.com&utm_medium=referral&utm_campaign=headless&utm_content=install_note)
+
+2. **Install the CLI**
+   ```bash
+   npm install -g @copado/agentia-cli
+   ```
+
+3. **Run the Setup Wizard**
+   ```bash
+   agentia setup
+   ```
+
+4. **Configure Environment**
+   - Set `AGENTIA_FORCE_DEMO=false` in your `.env` file to use live Agentia CLI integration
+
+### Quick Start
+
 ```bash
 # Install dependencies
 npm install
@@ -191,3 +223,5 @@ npm run dev
 npm run releasesentry -- doctor
 ```
 Open [http://localhost:3000](http://localhost:3000) to view the SaaS dashboard.
+
+For detailed installation instructions, see [INSTALLATION.md](./INSTALLATION.md).

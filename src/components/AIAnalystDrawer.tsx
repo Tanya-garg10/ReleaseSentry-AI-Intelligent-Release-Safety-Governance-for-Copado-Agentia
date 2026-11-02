@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Sparkles, Send, ShieldAlert, Bot, HelpCircle } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { api } from '../api.ts';
 import { Release, Incident } from '../types.ts';
 
@@ -165,8 +166,8 @@ export const AIAnalystDrawer: React.FC<AIAnalystDrawerProps> = ({
                   Engine: {response.provider}
                 </span>
               </div>
-              <div className="prose prose-xs max-w-none text-slate-800 whitespace-pre-wrap font-sans">
-                {response.explanation}
+              <div className="prose prose-xs max-w-none text-slate-800 font-sans">
+                <ReactMarkdown>{response.explanation}</ReactMarkdown>
               </div>
             </div>
           ) : (
