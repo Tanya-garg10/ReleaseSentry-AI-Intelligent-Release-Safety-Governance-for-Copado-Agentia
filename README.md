@@ -225,3 +225,25 @@ npm run releasesentry -- doctor
 Open [http://localhost:3000](http://localhost:3000) to view the SaaS dashboard.
 
 For detailed installation instructions, see [INSTALLATION.md](./INSTALLATION.md).
+
+---
+
+## 🚢 Deployment
+
+ReleaseSentry AI can be deployed using multiple methods:
+
+- **Docker** (Recommended): Simple containerized deployment
+- **Cloud Platforms**: Vercel, Railway, Render
+- **Traditional Server**: Node.js on any VPS or dedicated server
+- **Kubernetes**: For enterprise-scale deployments
+
+For detailed deployment guides, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+### Quick Docker Deployment
+
+```bash
+# Build and run with Docker Compose
+docker-compose up -d --build
+
+# Access at http://localhost:3000
+```
