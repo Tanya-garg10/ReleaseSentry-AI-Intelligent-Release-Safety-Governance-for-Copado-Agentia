@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Sparkles, Send, ShieldAlert, Bot, HelpCircle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { api } from '../api.ts';
@@ -19,12 +19,21 @@ export const AIAnalystDrawer: React.FC<AIAnalystDrawerProps> = ({
   incidents,
   selectedReleaseId
 }) => {
-  const [releaseId, setReleaseId] = useState<string>(selectedReleaseId || (releases[0]?.id ?? 'RLS-104'));
+  const [releaseId, setReleaseId] = useState<string>(selectedReleaseId || releases[0]?.id || 'RLS-104');
   const [queryType, setQueryType] = useState<'RISK_SUMMARY' | 'POLICY_EXPLANATION' | 'REMEDIATION_GUIDANCE' | 'INCIDENT_POSTMORTEM'>('RISK_SUMMARY');
-  const [incidentId, setIncidentId] = useState<string>(incidents[0]?.id ?? 'INC-901');
+  const [incidentId, setIncidentId] = useState<string>(incidents[0]?.id || 'INC-901');
   const [customQuery, setCustomQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<{ explanation: string; provider: string } | null>(null);
+
+  // Update releaseId when releases change or selectedReleaseId changes
+  useEffect(() => {
+    if (selectedReleaseId) {
+      setReleaseId(selectedReleaseId);
+    } else if (releases.length > 0) {
+      setReleaseId(releases[0].id);
+    }
+  }, [selectedReleaseId, releases]);
 
   if (!isOpen) return null;
 

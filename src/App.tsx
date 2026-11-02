@@ -31,6 +31,7 @@ export default function App() {
   const [isAIAnalystOpen, setIsAIAnalystOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedReleaseId, setSelectedReleaseId] = useState<string>('RLS-104');
 
   // Core Data State
   const [stats, setStats] = useState<SystemStats | null>(null);
@@ -186,6 +187,7 @@ export default function App() {
         onClose={() => setIsAIAnalystOpen(false)}
         releases={releases}
         incidents={incidents}
+        selectedReleaseId={selectedReleaseId}
       />
     </div>
   );
